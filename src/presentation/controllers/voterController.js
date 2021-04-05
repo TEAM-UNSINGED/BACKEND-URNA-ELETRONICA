@@ -17,5 +17,27 @@ module.exports = {
         return res.status(500)
     }
   },
+
+  async getCpf (req,res){
+      const cpf = req.headers.cpf;
+      if (!cpf) {
+        return res.status(400).send({ error: 'CPF is required' });
+      }
+      try {
+        const voter = await VoterSchema.findOne({cpf});
+        let boolean = true;
+        if(!voter){
+            return res.send(boolean);
+        }
+        else{
+            boolean= false;
+            return res.send(boolean);
+        }
+    } catch (err) {
+        logger.error(err);
+        return res.status(500)
+    }
+      
+  }
   
 }
