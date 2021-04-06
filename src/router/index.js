@@ -14,6 +14,8 @@ router.get('/validate',voterController.getCpf);
 
 //Candidate routes
 router.post('/candidate',candidateController.store);
+router.get('/candidate',candidateController.show);
+
 
 
 module.exports = router;

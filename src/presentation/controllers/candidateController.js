@@ -5,7 +5,7 @@ module.exports = {
  
   async store(req, res){
 
-    logger.debug(req.body)
+  
     const { name, type, party, number, photo, nameVice, photoVice } = req.body;
 
     try {
@@ -18,6 +18,16 @@ module.exports = {
         return res.status(500).send(err)
     }
   },
+  async show(req, res){
+    const { number, type} = req.query;
+    try {
+      const candidate = await Candidate.findOne({number: number, type: type})
+      return res.status(201).send(candidate);
+    } catch (error) {
+      logger.error(err);
+      return res.status(500).send(err)
+    }
+  }
 
  
   
