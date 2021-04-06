@@ -31,6 +31,9 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
+  voter:{
+    type: Number
+  }
 });
 
 module.exports = mongoose.model('Candidate', CandidateSchema);
