@@ -33,4 +33,4 @@ const CandidateSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('candidate', CandidateSchema);
+module.exports = mongoose.model('Candidate', CandidateSchema);
