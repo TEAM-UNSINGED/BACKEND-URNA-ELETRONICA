@@ -27,6 +27,18 @@ module.exports = {
       logger.error(err);
       return res.status(500).send(err)
     }
+  },
+  async index(req, res){
+    const {type} = req.query;
+
+    try {
+      const candidate = await Candidate.find({type: type})
+      return res.status(201).send(candidate);
+    } catch (error) {
+      logger.error(err);
+      return res.status(500).send(err)
+    }
+
   }
 
  
