@@ -31,7 +31,7 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
-  voter:{
+  votes:{
     type: Number
   }
 });
