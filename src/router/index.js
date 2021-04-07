@@ -17,6 +17,7 @@ router.post('/candidate',candidateController.store);
 router.get('/candidate',candidateController.show);
 router.get('/list',candidateController.index);
 router.post('/vote',candidateController.vote);
+router.get('/result',candidateController.result);
 
 
 
