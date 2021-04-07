@@ -16,6 +16,7 @@ router.get('/validate',voterController.getCpf);
 router.post('/candidate',candidateController.store);
 router.get('/candidate',candidateController.show);
 router.get('/list',candidateController.index);
+router.post('/vote',candidateController.vote);
 
 
 
