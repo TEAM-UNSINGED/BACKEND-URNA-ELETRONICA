@@ -1,6 +1,7 @@
 const  Candidate = require('../../domain/models/candidato/candidate');
 const VoterSchema = require('../../domain/models/voter/voter');
 const logger = require('../../config/logger');
+const removeVotes = require('./util/removeVotes')
 
 module.exports = {
  
@@ -10,10 +11,10 @@ module.exports = {
     const { name, type, party, number, photo, nameVice, photoVice } = req.body;
 
     try {
-      const candidate = await Candidate.findOne({number: number, type: type});
+      let candidate = await Candidate.findOne({number: number, type: type});
       if (candidate) {res.status(400).send({ error: `${type} already exists` })}
       const votes = 0;
-        const candidate = await Candidate.create({
+        candidate = await Candidate.create({
           name, type, party, number, photo, nameVice, photoVice, votes
         });
         return res.status(201).send(candidate);
@@ -26,7 +27,7 @@ module.exports = {
     const { number, type} = req.query;
     try {
       const candidate = await Candidate.findOne({number: number, type: type})
-      return res.status(201).send(candidate);
+      return res.status(201).send(removeVotes.remove_votes(candidate));
     } catch (error) {
       logger.error(err);
       return res.status(500).send(err);
@@ -60,7 +61,7 @@ module.exports = {
         return res.status(400).send({ error: 'SENATOR not found' });
       }
       await VoterSchema.create({cpf:cpf});
-      
+
       let vote =  PRESIDENT.votes + 1;
       await PRESIDENT.updateOne({$set:{votes:vote}});
 
