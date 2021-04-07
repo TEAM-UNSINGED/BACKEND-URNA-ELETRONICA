@@ -1,7 +1,8 @@
 const  Candidate = require('../../domain/models/candidato/candidate');
 const VoterSchema = require('../../domain/models/voter/voter');
 const logger = require('../../config/logger');
-const removeVotes = require('./util/removeVotes')
+const removeVotes = require('./util/removeVotes');
+const removeArrayVotes = require('./util/removeArrayVotes');
 
 module.exports = {
  
@@ -38,7 +39,7 @@ module.exports = {
 
     try {
       const candidate = await Candidate.find({type: type})
-      return res.status(201).send(candidate);
+      return res.status(201).send(removeArrayVotes.remove_array_votes(candidate));
     } catch (error) {
       logger.error(err);
       return res.status(500).send(err);
