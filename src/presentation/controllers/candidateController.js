@@ -47,25 +47,29 @@ module.exports = {
     const {president,governor,senator,cpf} = req.body;
 
     try{
-      let candidate = await Candidate.findOne({number: president, type: 'Presidente'});
-      if(!candidate){
+      const PRESIDENT = await Candidate.findOne({number: president, type: 'Presidente'});
+      if(!PRESIDENT){
         return res.status(400).send({ error: 'PRESIDENT not found' });
       }
-      let vote =  candidate.votes + 1;
-      await candidate.updateOne({$set:{votes:vote}});
-      candidate = await Candidate.findOne({number: governor, type: 'Governador'});
-      if(!candidate){
+      const GOVERNOR = await Candidate.findOne({number: governor, type: 'Governador'});
+      if(!GOVERNOR){
         return res.status(400).send({ error: 'GORVERNOR not found' });
       }
-      vote =  candidate.votes + 1;
-      await candidate.updateOne({$set:{votes:vote}});
-      candidate = await Candidate.findOne({number: senator, type: 'Senador'});
-      if(!candidate){
+      const SENATOR = await Candidate.findOne({number: senator, type: 'Senador'});
+      if(!SENATOR){
         return res.status(400).send({ error: 'SENATOR not found' });
       }
-      vote =  candidate.votes + 1;
-      await candidate.updateOne({$set:{votes:vote}});
-      const voter = await VoterSchema.create({cpf:cpf});
+      await VoterSchema.create({cpf:cpf});
+      
+      let vote =  PRESIDENT.votes + 1;
+      await PRESIDENT.updateOne({$set:{votes:vote}});
+
+      vote =  GOVERNOR.votes + 1;
+      await GOVERNOR.updateOne({$set:{votes:vote}});
+
+      vote =  SENATOR.votes + 1;
+      await SENATOR.updateOne({$set:{votes:vote}});
+
       return res.status(200).send({message: "Computed Vote"});
     }catch (error){
       logger.error(error);
