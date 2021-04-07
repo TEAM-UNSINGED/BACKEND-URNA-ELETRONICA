@@ -10,6 +10,8 @@ module.exports = {
     const { name, type, party, number, photo, nameVice, photoVice } = req.body;
 
     try {
+      const candidate = await Candidate.findOne({number: number, type: type});
+      if (candidate) {res.status(400).send({ error: `${type} already exists` })}
       const votes = 0;
         const candidate = await Candidate.create({
           name, type, party, number, photo, nameVice, photoVice, votes
